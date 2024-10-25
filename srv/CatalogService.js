@@ -4,18 +4,15 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-/*
 const sMongoUrl = process.env.MONGO_URL;
 const sDbName = process.env.DATABASE_NAME;
 const client = new MongoClient(sMongoUrl);
-*/
 
 async function _crearSuperheroe(req) {
     return req.data;
 }
 
 async function _recuperarSuperheroes(req) {
-    console.log("READ!");
     return req.data;
 }
 
