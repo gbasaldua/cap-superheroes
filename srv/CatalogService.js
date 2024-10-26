@@ -75,11 +75,36 @@ async function _recuperarSuperheroes(req) {
 }
 
 async function _actualizarSuperheroe(req) {
-    return req.data;
+
+    await client.connect();
+    var dataBase = await client.db(sDbName);
+    var superheroes = await dataBase.collection("SuperHeroes");
+
+    var oSuperHeroe = req.data;
+    var sId = new ObjectId(oSuperHeroe.id);
+    delete oSuperHeroe.id;
+
+    var oResult = await superheroes.updateOne({ _id: sId }, { $set: oSuperHeroe });
+
+    if (oResult.modifiedCount > 0) {
+        return oSuperHeroe;
+    } else {
+        return oResult;
+    }
+
 }
 
 async function _borrarSuperheroe(req) {
-    return req.data;
+
+    await client.connect();
+    var dataBase = await client.db(sDbName);
+    var superheroes = await dataBase.collection("SuperHeroes");
+
+    var oSuperHeroe = req.data;
+    var sId = new ObjectId(oSuperHeroe.id);
+
+    var oResult = await superheroes.deleteOne({ _id: sId });
+    return oResult;
 }
 
 
